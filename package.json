@@ -21,6 +21,7 @@
   "author": "David Cyril Tech",
   "license": "MIT",
   "dependencies": {
+    "axios": "^1.7.3",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "fs": "^0.0.1-security",
