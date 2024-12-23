@@ -1,214 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>DAVID CYRIL APIS</title>
-    <meta content="width=device-width,initial-scale=1" name="viewport">
-    <meta content name="keywords">
-    <meta content="Rest Api For Developers..." name="description">
-    <link href="https://files.catbox.moe/4hq1u5.jpg" rel="icon">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="../lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet">
-    <link href="../https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet">
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/style.css" rel="stylesheet">
-  </head>
-  <body> 
-<!----------------------------------------------------------------------------------------------->
-
-<div class="container-fluid position-relative d-flex p-0"></div>
-<div class="sidebar pe-4 pb-3">
-<nav class="navbar bg-secondary navbar-dark">
-<a href="#" class="navbar-brand mx-4 mb-3">
-  <h4 class="text-primary">
-    <i></i>David Cyril Api
-    </h4>
-</a>
-<div class="d-flex align-items-center ms-4 mb-4">
-<div class="position-relative">
-<img class="rounded-circle" src="https://files.catbox.moe/4hq1u5.jpg" alt style="width:40px;height:40px">
-<div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
-</div>
-<div class="ms-3">
-<h6 class="mb-0">David Cyril Tech</h6>
-<span></span>
-</div>
-</div>
-<div class="ms-3">
-<a href="#" class="nav-item nav-link">
-<i class="bi bi-speedometer2 me-2"></i>Home </a>
-<a href="../ai" class="nav-item nav-link">
-<i class="fa-solid fa-robot me-2"></i>Ai </a>
-</div>
-<a href="../download" class="nav-item nav-link">
-<i class="fa-solid fa-download me-2"></i>Downloader </a>
-</div>
-</div>
-</div>
-
-
-
-<!----------------------------------------------------------------------------------------------->
-
-    <div class="content">
-      <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
-        <a href="#" class="sidebar-toggler flex-shrink-0">
-          <i class="fa fa-bars"></i>
-        </a>
-        <div class="navbar-nav align-items-center ms-auto">
-        </div>
-      </nav>
-      <div class="container-fluid pt-4 px-4">
-        <div class="row g-4">
-          
-          <div class="col-sm-6 col-xl-6">
-            <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-              <i class="bi bi-reception-4 fa-3x text-primary"></i>
-              <div class="ms-3">
-                <p class="mb-2 text-primary">Your IP Address</p>
-                <h6 class="mb-0 text-end" id="ipaddress">Loading...</h6>
-                <script>
-                  setInterval(function() {
-                  var xhr = new XMLHttpRequest();
-                  xhr.open("GET", "https://api.davidcyriltech.my.id/status");
-                  xhr.responseType = "json";
-                  xhr.onload = () => document.getElementById('ipaddress').innerText = '' + xhr.response.yourip + '';
-                  xhr.send()
-              }, 1000);
-              </script>
-              </div>
-            </div>
-          </div>
-
-
-<!----------------------------------------------------------------------------------------------->
-
-<div class="col-sm-6 col-xl-6">
-  <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-    <i class="bi bi-battery-charging fa-3x text-primary"></i>
-    <div class="ms-3">
-      <p class="mb-2 text-primary">Your Battery</p>
-      <h6 class="mb-0 text-end" id="batteryLevel">Loading...</h6>
-      <script>
-        function updateBatteryStatus() {
-          navigator.getBattery().then(function (battery) {
-            const level = (battery.level * 100).toFixed(0) + '%'; 
-            const chargingStatus = battery.charging ? 'Charging' : 'Discharging'; 
-            document.getElementById('batteryLevel').textContent = `${level} (${chargingStatus})`;
-          });
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAVID CYRIL API</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0f172a;
+            font-family: 'Arial', sans-serif;
+            color: #e2e8f0;
         }
-        updateBatteryStatus();
-        setInterval(updateBatteryStatus, 1000);
-      </script>
-    </div>
-  </div>
-</div>
 
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 1.5s infinite ease-in-out;
+        }
 
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.8; }
+        }
 
-<!----------------------------------------------------------------------------------------------->
+        .stat-card {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+        }
 
-          <div class="col-sm-6 col-xl-6">
-            <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-              <i class="bi bi-clock-fill fa-3x text-primary"></i>
-              <div class="ms-3">
-                <p class="mb-2 text-primary">Server Runtime</p>
-                <h6 class="mb-0 text-end" id="runtime">Loading...</h6>
-                <script>
-                  setInterval(function() {
-                  var xhr = new XMLHttpRequest();
-                  xhr.open("GET", "https://api.davidcyriltech.my.id/status");
-                  xhr.responseType = "json";
-                  xhr.onload = () => document.getElementById('runtime').innerText = '' + xhr.response.runtime + '';
-                  xhr.send()
-              }, 1000);
-              </script>
-              </div>
+        .stat-card h2 {
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            font-size: 0.9rem;
+            color: #a0aec0;
+        }
+
+        .btn {
+            background-color: #2563eb;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            display: block;
+            margin: 20px auto 0;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #1e40af;
+        }
+    </style>
+</head>
+<body>
+    <div id="stars" class="fixed inset-0 z-0"></div>
+    <div class="container mx-auto px-4 py-12 relative z-10">
+        <h1 class="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+            WELCOME TO DAVID CYRIL API
+        </h1>
+
+        <div class="flex flex-wrap justify-center gap-4 mb-6">
+            <div class="stat-card">
+                <h2>Api Requests</h2>
+                <p id="visitorToday">Loading...</p>
             </div>
-          </div>
-
-<!----------------------------------------------------------------------------------------------->
-
-          <div class="col-sm-6 col-xl-6">
-            <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-              <i class="bi bi-cpu-fill fa-3x text-primary"></i>
-              <div class="ms-3">
-                <p class="mb-2 text-primary">Ram Usage</p>
-                <h6 class="mb-0 text-end" id="memory">Loading...</h6>
-                <script>
-                  setInterval(function() {
-                  var xhr = new XMLHttpRequest();
-                  xhr.open("GET", "https://api.davidcyriltech.my.id/status");
-                  xhr.responseType = "json";
-                  xhr.onload = () => document.getElementById('memory').innerText = '' + xhr.response.memory + '';
-                  xhr.send()
-              }, 1000);
-              </script>
-              </div>
+            <div class="stat-card">
+                <h2>Memory Usage</h2>
+                <p id="memoryUsage">Loading...</p>
             </div>
-          </div>
-<!----------------------------------------------------------------------------------------------->  
-
-           </div>
-      </div>
-      <div class="container-fluid pt-4 px-4">
-        <div class="row g-4">
-          <div class="col-sm-12 col-xl-6">
-            <div class="bg-secondary rounded h-100 p-4">
-              <div class="d-flex align-items-center justify-content-between mb-2">
-                <h6 class="mb-0"><i class="bx bx-news text-primary me-2"></i>Whats New:</h6>
+            <div class="stat-card">
+                <h2>Runtime</h2>
+                <p id="runtime">Loading...</p>
             </div>
-              <ul class="list-unstyled mb-0">
-                <li>
-                  <ul>
-                  <ul>
-                    <li>Added Youtube Downloaders</li>
-                    <li>Added Tiktok Downloader</li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-          </div>
-      <div class="container-fluid pt-4 px-4">
-        <div class="bg-secondary rounded-top p-4">
-          <div class="row">
-            <div class="col-12 col-sm-6 text-center text-sm-start">&copy; <a href="https://davidcyriltech.my.id">David Cyril Tech</a>, Ms David</div>
-            </div>
-          </div>
         </div>
-      </div>
-    </div>
-<!----------------------------------------------------------------------------------------------->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../lib/chart/chart.min.js"></script>
-    <script src="../lib/easing/easing.min.js"></script>
-    <script src="../lib/waypoints/waypoints.min.js"></script>
-    <script src="../lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="../lib/tempusdominus/js/moment.min.js"></script>
-    <script src="../lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="../lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-    <script src="../js/main.js"></script>
-    <script src="../js/script.js"></script>
-    <script src="../socket.io/socket.io.min.js"></script>
-      <script>
-         document.addEventListener('DOMContentLoaded', function() {
-           const rows = document.querySelectorAll('tbody tr');
-           rows.forEach((row, index) => {
-             const th = row.querySelector('th[scope="row"]');
-             if (th) {
-               th.textContent = index + 1;
-             }
-           });
-         });
-       </script>
-  </body>
-</html>
 
-<!----------------------------------------------------------------------------------------------->
+        <a href="endpoints.html" class="btn">Continue to Endpoints</a>
+        <footer class="text-center mt-4 text-sm text-gray-500">
+            &copy; 2024 - 2099 David Cyril Tech. All rights reserved.
+        </footer>
+    </div>
+
+    <script>
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const numberOfStars = 100;
+
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                const size = Math.random() * 2 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.animationDelay = `${Math.random() * 2}s`;
+                starsContainer.appendChild(star);
+            }
+        }
+
+        async function fetchStats() {
+            try {
+                const statusResponse = await fetch('https://api.davidcyriltech.my.id/status');
+                const countResponse = await fetch('https://api.davidcyriltech.my.id/count');
+
+                const statusData = await statusResponse.json();
+                const countData = await countResponse.json();
+
+                document.getElementById('visitorToday').textContent = countData.visitor_today.toLocaleString();
+                document.getElementById('memoryUsage').textContent = statusData.memory;
+                document.getElementById('runtime').textContent = statusData.runtime;
+            } catch (error) {
+                console.error('Error fetching stats:', error);
+            }
+        }
+
+        createStars();
+        fetchStats();
+        setInterval(fetchStats, 1000);
+    </script>
+</body>
+</html>
