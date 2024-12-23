@@ -36,7 +36,7 @@ const SaveTube = {
     
     checkQuality(type, qualityIndex) {
         if (!(qualityIndex in this.qualities[type])) {
-            throw new Error(`❌ Kualitas ${type} tidak valid. Pilih salah satu: ${Object.keys(this.qualities[type]).join(', ')}`);
+            throw new Error(`❌ Invalid ${type} Failed with Status: ${Object.keys(this.qualities[type]).join(', ')}`);
         }
     },
     
@@ -61,7 +61,7 @@ const SaveTube = {
     async dl(link, qualityIndex, typeIndex) {
         const type = typeIndex === 1 ? 'audio' : 'video';
         const quality = SaveTube.qualities[type][qualityIndex];
-        if (!type) throw new Error('❌ Tipe tidak valid. Pilih 1 untuk audio atau 2 untuk video.');
+        if (!type) throw new Error('❌ Invalid Media Type');
         SaveTube.checkQuality(type, qualityIndex);
         const cdnNumber = SaveTube.cdn();
         const cdnUrl = `cdn${cdnNumber}.savetube.su`;
