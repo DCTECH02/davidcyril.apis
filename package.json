@@ -1,0 +1,37 @@
+{
+  "name": "david-cyril--api",
+  "version": "1.0.0",
+  "description": "David Cyril Apis",
+  "main": "./index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [
+    "youtube",
+    "tiktok",
+    "downloader",
+    "api",
+    "nodejs",
+    "express"
+  ],
+  "author": "David Cyril Tech",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "fs": "^0.0.1-security",
+    "http": "^0.0.1-security",
+    "os": "latest",
+    "path": "^0.12.7",
+    "url": "^0.11.4",
+    "yt-search": "2.12.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
