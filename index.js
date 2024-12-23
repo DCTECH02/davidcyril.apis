@@ -3,8 +3,7 @@ import os from 'os';
 import http from 'http';
 import express from 'express';
 import path from 'path';
-import cors from 'cors';
-app.use(cors());
+
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import { Mp3, 
@@ -25,6 +24,8 @@ const port = process.env.PORT || 3000;
 app.enable('trust proxy');
 app.set('json spaces', 2);
 app.use(express.static(path.join(__dirname, 'public')));
+import cors from 'cors';
+app.use(cors());
 
 const byteToKB = 1 / 1024,
       byteToMB = 1 / Math.pow(1024, 2),
