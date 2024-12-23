@@ -5,11 +5,13 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
-import { Mp3, Mp4 } from './exports/youtube.js';
-import { tiktokdl } from './exports/tiktok.js';
+import { Mp3, 
+         Mp4, 
+         tiktokdl, 
+         chatbot } from './exports';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url),
+      __dirname = path.dirname(__filename);
 dotenv.config({ path: path.join(__dirname, '.env') });
 
 const app = express();
@@ -20,9 +22,9 @@ app.enable('trust proxy');
 app.set('json spaces', 2);
 app.use(express.static(path.join(__dirname, 'public')));
 
-const byteToKB = 1 / 1024;
-const byteToMB = 1 / Math.pow(1024, 2);
-const byteToGB = 1 / Math.pow(1024, 3);
+const byteToKB = 1 / 1024,
+      byteToMB = 1 / Math.pow(1024, 2),
+      byteToGB = 1 / Math.pow(1024, 3);
 
 // Utility Functions
 function formatBytes(bytes) {
@@ -39,14 +41,14 @@ function formatBytes(bytes) {
 
 function runtime(seconds) {
   seconds = Number(seconds);
-  const d = Math.floor(seconds / (3600 * 24));
-  const h = Math.floor((seconds % (3600 * 24)) / 3600);
-  const m = Math.floor((seconds % 3600) / 60);
-  const s = Math.floor(seconds % 60);
-  const dDisplay = d > 0 ? d + (d === 1 ? ' day, ' : ' days, ') : '';
-  const hDisplay = h > 0 ? h + (h === 1 ? ' hour, ' : ' hours, ') : '';
-  const mDisplay = m > 0 ? m + (m === 1 ? ' minute, ' : ' minutes, ') : '';
-  const sDisplay = s > 0 ? s + (s === 1 ? ' second' : ' seconds') : '';
+  const d = Math.floor(seconds / (3600 * 24)),
+        h = Math.floor((seconds % (3600 * 24)) / 3600),
+        m = Math.floor((seconds % 3600) / 60),
+        s = Math.floor(seconds % 60),
+        dDisplay = d > 0 ? d + (d === 1 ? ' day, ' : ' days, ') : '',
+        hDisplay = h > 0 ? h + (h === 1 ? ' hour, ' : ' hours, ') : '',
+        mDisplay = m > 0 ? m + (m === 1 ? ' minute, ' : ' minutes, ') : '',
+        sDisplay = s > 0 ? s + (s === 1 ? ' second' : ' seconds') : '';
   return dDisplay + hDisplay + mDisplay + sDisplay;
 }
 
@@ -67,8 +69,8 @@ function getVisitorData() {
 }
 
 function updateVisitorData() {
-    const data = getVisitorData();
-    const today = new Date().toISOString().split('T')[0];
+    const data = getVisitorData(),
+          today = new Date().toISOString().split('T')[0];
     if (data.last_date !== today) {
         data.visitor_today = 0;
         data.last_date = today;
@@ -95,10 +97,10 @@ app.get('/count', (req, res) => {
 
 // Status Endpoint
 app.get('/status', (req, res) => {
-  const uptimeSeconds = Math.floor((Date.now() - serverStartTime) / 1000);
-  const totalMemoryBytes = os.totalmem();
-  const freeMemoryBytes = os.freemem();
-  const clientIP = req.ip || req.connection.remoteAddress;
+  const uptimeSeconds = Math.floor((Date.now() - serverStartTime) / 1000),
+        totalMemoryBytes = os.totalmem(),
+        freeMemoryBytes = os.freemem(),
+        clientIP = req.ip || req.connection.remoteAddress;
   res.json({
     runtime: runtime(uptimeSeconds),
     memory: `${formatBytes(freeMemoryBytes)} / ${formatBytes(totalMemoryBytes)}`,
@@ -200,6 +202,36 @@ app.get('/download/tiktok', async (req, res) => {
     });
   } catch (error) {
     console.error('Error fetching TikTok data:', error);
+    res.status(500).json({
+      creator: 'David Cyril Tech',
+      status: 500,
+      success: false,
+      error: 'Internal Server Error',
+    });
+  }
+});
+
+// TikTok Downloader Route
+app.get('/ai/chatbot', async (req, res) => {
+  const { query } = req.query;
+  if (!query) {
+    return res.status(400).json({
+      creator: 'David Cyril Tech',
+      status: 400,
+      success: false,
+      error: 'Missing QUERY parameter',
+    });
+  }
+  try {
+    const result = await chatbot(query);
+    res.json({
+      creator: 'David Cyril Tech',
+      status: 200,
+      success: true,
+      result,
+    });
+  } catch (error) {
+    console.error('Error fetching chatbot data:', error);
     res.status(500).json({
       creator: 'David Cyril Tech',
       status: 500,
