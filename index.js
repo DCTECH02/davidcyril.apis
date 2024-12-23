@@ -3,6 +3,8 @@ import os from 'os';
 import http from 'http';
 import express from 'express';
 import path from 'path';
+import cors from 'cors';
+app.use(cors());
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import { Mp3, 
