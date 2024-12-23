@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "pm2 start index.js --attach --name cyrilapi",
     "stop": "pm2 stop cyrilapi",
-    "restart": "pm2 restart cyrilapi",
+    "restart": "pm2 restart cyrilapi"
   },
   "keywords": [
     "youtube",
