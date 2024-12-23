@@ -244,33 +244,41 @@ app.get('/ai/chatbot', async (req, res) => {
 });
 
 app.get('/lyrics/search', async (req, res) => {
-  const { song } = req.query;
-  if (!song) {
-    return res.status(400).json({
-      creator: 'David Cyril Tech',
-      status: 400,
-      success: false,
-      error: 'Missing SONG parameter',
-    });
-  }
-  try {
-    const results = await Lyrics.search(song);
-    res.json({
-      creator: 'David Cyril Tech',
-      status: 200,
-      success: true,
-      results,
-    });
-  } catch (error) {
-    console.error('Error fetching lyrics search:', error);
-    res.status(500).json({
-      creator: 'David Cyril Tech',
-      status: 500,
-      success: false,
-      error: 'Internal Server Error',
-    });
-  }
-}); 
+    const { song } = req.query;
+    if (!song) {
+        return res.status(400).json({
+            creator: 'David Cyril Tech',
+            status: 400,
+            success: false,
+            error: 'Missing song parameter',
+        });
+    }
+    try {
+        const results = await lyrics.search(song);
+        if (results.length === 0) {
+            return res.status(404).json({
+                creator: 'David Cyril Tech',
+                status: 404,
+                success: false,
+                error: 'No lyrics found for the requested song',
+            });
+        }
+        res.json({
+            creator: 'David Cyril Tech',
+            status: 200,
+            success: true,
+            results,
+        });
+    } catch (error) {
+        console.error('Error searching for lyrics:', error);
+        res.status(500).json({
+            creator: 'David Cyril Tech',
+            status: 500,
+            success: false,
+            error: 'Internal Server Error',
+        });
+    }
+});
 
 app.get('/lyrics/details', async (req, res) => {
   const { url } = req.query;
