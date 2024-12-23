@@ -8,6 +8,7 @@ import dotenv from 'dotenv';
 import { Mp3, 
          Mp4, 
          tiktokdl, 
+         Lyrics,
          chatbot } from './exports/index.js';
 
 const __filename = fileURLToPath(import.meta.url),
@@ -233,6 +234,64 @@ app.get('/ai/chatbot', async (req, res) => {
     });
   } catch (error) {
     console.error('Error fetching chatbot data:', error);
+    res.status(500).json({
+      creator: 'David Cyril Tech',
+      status: 500,
+      success: false,
+      error: 'Internal Server Error',
+    });
+  }
+});
+
+app.get('/lyrics/search', async (req, res) => {
+  const { song } = req.query;
+  if (!song) {
+    return res.status(400).json({
+      creator: 'David Cyril Tech',
+      status: 400,
+      success: false,
+      error: 'Missing SONG parameter',
+    });
+  }
+  try {
+    const results = await Lyrics.search(song);
+    res.json({
+      creator: 'David Cyril Tech',
+      status: 200,
+      success: true,
+      results,
+    });
+  } catch (error) {
+    console.error('Error fetching lyrics search:', error);
+    res.status(500).json({
+      creator: 'David Cyril Tech',
+      status: 500,
+      success: false,
+      error: 'Internal Server Error',
+    });
+  }
+}); 
+
+app.get('/lyrics/details', async (req, res) => {
+  const { url } = req.query;
+  if (!url) {
+    return res.status(400).json({
+      creator: 'David Cyril Tech',
+      status: 400,
+      success: false,
+      error: 'Missing URL parameter',
+    });
+  }
+  try {
+    const result = await Lyrics.getLyrics(url);
+    res.json({
+      creator: 'David Cyril Tech',
+      status: 200,
+      success: true,
+      result,
+    });
+  } catch (error) {
+    console.error('Error fetching lyrics details:', error);
     res.status(500).json({
       creator: 'David Cyril Tech',
       status: 500,
