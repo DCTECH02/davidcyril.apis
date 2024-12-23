@@ -1,3 +1,4 @@
+import fs from 'fs';
 import os from 'os';
 import http from 'http';
 import express from 'express';
