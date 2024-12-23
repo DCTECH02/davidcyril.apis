@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const chatbot = {
-  send: async (message, model = "gpt-4o-mini") => {
+  send: async (message, model = "gpt-3.5-turbo") => {
     try {
       const modelx = ["gpt-3.5-turbo", "gpt-3.5-turbo-0125", "gpt-4o-mini", "gpt-4o"];
       if (!modelx.includes(model)) {
@@ -20,7 +20,9 @@ const chatbot = {
           'User-Agent': 'Postify/1.0.0'
         }
       });
-      return response.data;
+
+      // Extract and return only the content from the response
+      return response.data.choices[0].message.content;
     } catch (error) {
       console.error(error);
       throw error;
