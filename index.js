@@ -224,7 +224,7 @@ app.get('/ai/chatbot', async (req, res) => {
     });
   }
   try {
-    const result = await chatbot(query);
+    const result = await chatbot.send(query);
     res.json({
       creator: 'David Cyril Tech',
       status: 200,
