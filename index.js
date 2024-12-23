@@ -8,7 +8,7 @@ import dotenv from 'dotenv';
 import { Mp3, 
          Mp4, 
          tiktokdl, 
-         chatbot } from './exports';
+         chatbot } from './exports/index.js';
 
 const __filename = fileURLToPath(import.meta.url),
       __dirname = path.dirname(__filename);
