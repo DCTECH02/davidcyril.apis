@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAVID CYRIL API</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0f172a;
+            font-family: 'Arial', sans-serif;
+            color: #e2e8f0;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 1.5s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.8; }
+        }
+
+        .stat-card {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .stat-card h2 {
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            font-size: 0.9rem;
+            color: #a0aec0;
+        }
+
+        .btn {
+            background-color: #2563eb;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            display: block;
+            margin: 20px auto 0;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #1e40af;
+        }
+    </style>
+</head>
+<body>
+    <div id="stars" class="fixed inset-0 z-0"></div>
+    <div class="container mx-auto px-4 py-12 relative z-10">
+        <h1 class="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+            WELCOME TO DAVID CYRIL API
+        </h1>
+
+        <div class="flex flex-wrap justify-center gap-4 mb-6">
+            <div class="stat-card">
+                <h2>Toay's Requests</h2>
+                <p id="visitorToday">Loading...</p>
+            </div>
+            <div class="stat-card">
+                <h2>Ram Usage</h2>
+                <p id="memoryUsage">Loading...</p>
+            </div>
+            <div class="stat-card">
+                <h2>Server Runtime</h2>
+                <p id="runtime">Loading...</p>
+            </div>
+        </div>
+
+        <a href="./docs" class="btn">Continue to Docs</a>
+        <footer class="text-center mt-4 text-sm text-gray-500">
+            &copy; 2024 - 2099 David Cyril Tech. All rights reserved.
+        </footer>
+    </div>
+
+    <script>
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const numberOfStars = 100;
+
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                const size = Math.random() * 2 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.animationDelay = `${Math.random() * 2}s`;
+                starsContainer.appendChild(star);
+            }
+        }
+
+        async function fetchStats() {
+            try {
+                const statusResponse = await fetch('https://api.davidcyriltech.my.id/status');
+                const countResponse = await fetch('https://api.davidcyriltech.my.id/count');
+
+                const statusData = await statusResponse.json();
+                const countData = await countResponse.json();
+
+                document.getElementById('visitorToday').textContent = countData.visitor_today.toLocaleString();
+                document.getElementById('memoryUsage').textContent = statusData.memory;
+                document.getElementById('runtime').textContent = statusData.runtime;
+            } catch (error) {
+                console.error('Error fetching stats:', error);
+            }
+        }
+
+        createStars();
+        fetchStats();
+        setInterval(fetchStats, 1000);
+    </script>
+</body>
+</html>
