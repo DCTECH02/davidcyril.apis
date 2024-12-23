@@ -16,6 +16,7 @@ dotenv.config({ path: path.join(__dirname, '.env') });
 
 const app = express();
 app.use(express.json());
+const serverStartTime = Date.now();
 
 const port = process.env.PORT || 3000;
 app.enable('trust proxy');
