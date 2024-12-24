@@ -1,5 +1,6 @@
 import fs from 'fs';
 import os from 'os';
+import cors from 'cors';
 import http from 'http';
 import express from 'express';
 import path from 'path';
@@ -17,6 +18,23 @@ const __filename = fileURLToPath(import.meta.url),
 dotenv.config({ path: path.join(__dirname, '.env') });
 
 const app = express();
+// Allow requests from specific domains
+const allowedOrigins = [
+  'https://api.davidcyriltech.my.id',
+  'https://davidcyril-apis.onrender.com'
+];
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 const serverStartTime = Date.now();
 
